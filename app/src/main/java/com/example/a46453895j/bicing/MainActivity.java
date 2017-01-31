@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
 
-        //cuando cargue el mapa le indicamos las coordenadas que queremos que nos muestre inicialmente
+        //ccuando cargue el mapa le indicamos las coordenadas que queremos que nos muestre inicialmente
         GeoPoint startPoint = new GeoPoint(41.38, 2.16);
         IMapController mapController = map.getController();
         mapController.setZoom(9);
