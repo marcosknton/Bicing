@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MinimapOverlay;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
@@ -18,11 +16,13 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 public class MainActivity extends AppCompatActivity {
 
     private MapView map;
+    private IMapController mapController;
+
     private MyLocationNewOverlay myLocationOverlay;
     private MinimapOverlay mMinimapOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
     private CompassOverlay mCompassOverlay;
-    private IMapController mapController;
+
 
 
     @Override
@@ -30,15 +30,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         map=(MapView) findViewById(R.id.map);
-        initializeMap();
+
+       // GeoPoint startPoint = new GeoPoint(41.38, 2.16);
+        //setZoom(startPoint);
+        //initializeMap();
 
 
         //cuando cargue el mapa le indicamos las coordenadas que queremos que nos muestre inicialmente
         //GeoPoint startPoint = new GeoPoint(41.38, 2.16);
-        mapController = map.getController();
+        //mapController = map.getController();
         //setZoom(startPoint);
 
-        setOverlays();
+        //setOverlays();
         RefreshDataTask task=new RefreshDataTask(this, map);
         task.execute();
 
@@ -76,19 +79,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initializeMap() {
+    /*private void initializeMap() {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setTilesScaledToDpi(true);
 
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
     }
+
     private void setZoom(GeoPoint startPoint) {
         //  Setteamos el zoom al mismo nivel y ajustamos la posición a un geopunto
         mapController.setZoom(15);
         mapController.setCenter(startPoint);
     }
-
+ */
 
     private void setOverlays(){
         final DisplayMetrics dm=getResources().getDisplayMetrics();
