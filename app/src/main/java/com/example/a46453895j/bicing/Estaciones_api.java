@@ -28,11 +28,11 @@ public class Estaciones_api {
                 double latitude=object.getDouble("latitude");
                 double longitude=object.getDouble("longitude");
                 String streetName=object.getString("streetName");
-                int streetNumber=object.getInt("streetNumber");
+                String  streetNumber=object.getString("streetNumber");
                 int altitude=object.getInt("altitude");
                 int slots=object.getInt("slots");
                 int bikes=object.getInt("bikes");
-                String cercanos=object.getString("cercanos");
+                String cercanos=object.getString("nearbyStations");
                 String status=object.getString("status");
                 Estaciones estaciones=new Estaciones(id,type,latitude,longitude,streetName,streetNumber,slots,altitude,bikes,cercanos,status);
                 lista.add(estaciones);

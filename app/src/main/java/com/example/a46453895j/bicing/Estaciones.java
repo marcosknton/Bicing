@@ -1,17 +1,19 @@
 package com.example.a46453895j.bicing;
 
+import java.io.Serializable;
+
 /**
  * Created by 46453895j on 31/01/17.
  */
 
-public class Estaciones {
+public class Estaciones implements Serializable {
 
 
     public Estaciones(){
 
     }
 
-    public Estaciones(int id, String type, Double latitude, Double longitude, String streetName, int streetNumber, int slots, int altitude, int bikes, String cercanos, String status) {
+    public Estaciones(int id, String type, Double latitude, Double longitude, String streetName, String streetNumber, int slots, int altitude, int bikes, String cercanos, String status) {
 
         this.id = id;
         this.type = type;
@@ -32,7 +34,7 @@ public class Estaciones {
     Double latitude;
     Double longitude;
     String streetName;
-    int streetNumber;
+    String streetNumber;
     int altitude;
     int slots;
     int bikes;
@@ -59,7 +61,7 @@ public class Estaciones {
         return streetName;
     }
 
-    public int getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
