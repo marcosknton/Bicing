@@ -1,5 +1,6 @@
 package com.example.a46453895j.bicing;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         map=(MapView) findViewById(R.id.map);
+        Resources resources=getResources();
 
        // GeoPoint startPoint = new GeoPoint(41.38, 2.16);
         //setZoom(startPoint);
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         //setZoom(startPoint);
 
         //setOverlays();
-        RefreshDataTask task=new RefreshDataTask(this, map);
+        RefreshDataTask task=new RefreshDataTask(this, map,resources);
         task.execute();
 
 

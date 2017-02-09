@@ -1,6 +1,7 @@
 package com.example.a46453895j.bicing;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import org.osmdroid.api.IMapController;
@@ -23,6 +24,7 @@ public class RefreshDataTask extends AsyncTask<Void,Void,ArrayList<Estaciones>> 
 
     Context context;
     MapView map;
+    Resources resources;
     private MyLocationNewOverlay myLocationOverlay;
     private MinimapOverlay mMinimapOverlay;
     private ScaleBarOverlay mScaleBarOverlay;
@@ -33,9 +35,11 @@ public class RefreshDataTask extends AsyncTask<Void,Void,ArrayList<Estaciones>> 
 
 
 
-    public RefreshDataTask(Context context, MapView map){
-       this.context=context;
-       this.map = map;
+
+    public RefreshDataTask(Context context, MapView map,Resources resources){
+        this.context=context;
+        this.map = map;
+        this.resources=resources;
 
    }
 
@@ -57,10 +61,40 @@ public class RefreshDataTask extends AsyncTask<Void,Void,ArrayList<Estaciones>> 
             Double latitud=estaciones.get(i).getLatitude();
             Double longitud=estaciones.get(i).getLongitude();
             String calle=estaciones.get(i).getStreetName();
+            String number=estaciones.get(i).getStreetNumber();
+            int slots=estaciones.get(i).getSlots();
+            int bikes=estaciones.get(i).getBikes();
+            int porcentaje=disponible(slots,bikes);
             GeoPoint estationpoint = new GeoPoint(latitud, longitud);
             Marker startMaker = new Marker(map);
             startMaker.setPosition(estationpoint);
-            startMaker.setTitle(calle);
+            startMaker.setTitle(calle+" nº "+number);
+
+            if (estaciones.get(i).getType().equals("BIKE")) {
+                if (porcentaje == 0) startMaker.setIcon(resources.getDrawable(R.drawable.biker_0));
+                if (porcentaje > 0 && porcentaje <= 25)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.biker_25));
+                if (porcentaje > 25 && porcentaje <= 50)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.biker_50));
+                if (porcentaje > 50 && porcentaje <= 75)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.biker_75));
+                if (porcentaje > 75 && porcentaje <= 100)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.biker_100));
+
+            } else  {
+                if (porcentaje == 0)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.motobiker_0));
+                if (porcentaje > 0 && porcentaje <= 25)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.motobiker_25));
+                if (porcentaje > 25 && porcentaje <= 50)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.motobiker_50));
+                if (porcentaje > 50 && porcentaje <= 75)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.motobiker_75));
+                if (porcentaje > 75 && porcentaje <= 100)
+                    startMaker.setIcon(resources.getDrawable(R.drawable.motobiker_100));
+
+            }
+
             map.getOverlays().add(startMaker);
         }
         GeoPoint startPoint = new GeoPoint(41.38, 2.16);
@@ -102,6 +136,11 @@ public class RefreshDataTask extends AsyncTask<Void,Void,ArrayList<Estaciones>> 
         map.getOverlays().add(this.mScaleBarOverlay);
         map.getOverlays().add(this.mCompassOverlay);
     }
-
+    private int disponible(int slots,int bikes){
+        int porcentaje=0;
+        int total=bikes+slots;
+        porcentaje=(100*slots)/total;
+        return porcentaje;
+    }
 
 }
